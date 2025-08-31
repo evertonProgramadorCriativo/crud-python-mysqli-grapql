@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: email-classifier
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: DB_HOST
+        fromDatabase:
+          name: mysql-db
+          property: host
+      - key: DB_NAME
+        fromDatabase:
+          name: mysql-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: mysql-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: mysql-db
+          property: password
+      - key: SECRET_KEY
+        generateValue: true

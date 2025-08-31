@@ -3,7 +3,7 @@ from flask_graphql import GraphQLView
 from flask_cors import CORS
 import jwt
 import traceback
-
+import os
 # Imports das classes 
 from database import Database
 from ai_classifier import EmailClassifier
@@ -11,6 +11,8 @@ from schema import schema
 
 app = Flask(__name__)
 CORS(app)
+# Usar variável de ambiente para a chave secreta
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'your_secret_key')
 
 # Inicializar componentes
 try:
@@ -31,7 +33,7 @@ def get_current_user(token):
         if token.startswith('Bearer '):
             token = token[7:]
         
-        payload = jwt.decode(token, 'your_secret_key', algorithms=['HS256'])
+        payload = jwt.decode(token, app.config['SECRET_KEY'], algorithms=['HS256'])
         user_id = payload['user_id']
         
         cursor = db.connection.cursor()
@@ -274,6 +276,9 @@ if __name__ == '__main__':
         print("3. Se todas as dependências estão instaladas")
         exit(1)
     
-
-    
-    app.run(debug=True, host='0.0.0.0', port=5000)
+    # Executar com gunicorn em produção
+    if os.environ.get('PRODUCTION'):
+        # Não usar app.run() em produção
+        pass
+    else:
+        app.run(debug=True, host='0.0.0.0', port=5000)

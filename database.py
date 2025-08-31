@@ -14,10 +14,12 @@ class Database:
         try:
             # ALTERE AQUI SUAS CREDENCIAIS DO MYSQL
             self.connection = mysql.connector.connect(
-                host='localhost',
-                database='email_classifier_teste',
-                user='dudu-e',  # SEU USUARIO MYSQL
-                password='dudu',  # SUA SENHA MYSQL
+                host=os.getenv('DB_HOST', 'localhost'),
+                database=os.getenv('DB_NAME', 'email_classifier_teste'),
+                user=os.getenv('DB_USER', 'dudu-e'),
+                password=os.getenv('DB_PASSWORD', 'dudu'),
+                port=os.getenv('DB_PORT', 3306)
+
                   
             )
             if self.connection.is_connected():
