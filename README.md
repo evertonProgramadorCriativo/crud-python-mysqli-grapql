@@ -67,6 +67,45 @@ mutation {
 }
 
 ```
+
+```bash
+# Buscar Email Específico
+query {
+  email(id: 1) {
+    id
+    sender
+    subject
+    body
+    categoryName
+    suggestedResponse
+  }
+}
+
+# Classificar Email
+mutation {
+  classifyEmail(sender: "cliente@empresa.com", subject: "Problema no sistema", body: "Preciso de ajuda urgente com o sistema que não está funcionando") {
+    email {
+      id
+      categoryName
+      confidenceScore
+      suggestedResponse
+    }
+    message
+  }
+}
+
+# Adicionar Feedback
+
+mutation {
+  addFeedback(emailId: 1, correctedCategoryId: 2, feedbackText: "Categoria corrigida manualmente") {
+    feedback {
+      id
+    }
+    message
+  }
+}
+
+```
 ##  O que o sistema faz
 -  **Classificação Automática:** Usa algoritmo **Naive Bayes** para categorizar emails em **6 categorias**
 -  **Dashboard Interativo:** Interface web com estatísticas e visualizações
@@ -96,5 +135,5 @@ mutation {
 
 ---
 
-![Formulario](https://i.ibb.co/NghgZqWH/Screenshot-16.png) 
-![Estrutura do Projeto](https://i.ibb.co/rRvQG62d/Screenshot-17.png) 
+![Formulario](https://i.ibb.co/sds18ryD/Screenshot-19.png) 
+![Estrutura do Projeto](https://i.ibb.co/B22DLyTz/Screenshot-21.png) 

@@ -1,4 +1,4 @@
-# schema_corrigido.py
+
 import graphene
 from graphene import ObjectType, String, Int, Float, Boolean, List, Field
 import jwt
@@ -13,7 +13,35 @@ class User(ObjectType):
     is_admin = Boolean()
     created_at = String()
 
-# Payload de Autenticação
+class Category(ObjectType):
+    id = Int()
+    name = String()
+    description = String()
+    color = String()
+    created_at = String()
+
+class Email(ObjectType):
+    id = Int()
+    sender = String()
+    subject = String()
+    body = String()
+    category_id = Int()
+    category_name = String()
+    confidence_score = Float()
+    suggested_response = String()
+    user_id = Int()
+    is_processed = Boolean()
+    created_at = String()
+
+class Feedback(ObjectType):
+    id = Int()
+    email_id = Int()
+    user_id = Int()
+    original_category_id = Int()
+    corrected_category_id = Int()
+    feedback_text = String()
+    created_at = String()
+
 class AuthPayload(ObjectType):
     token = String()
     user = Field(User)
@@ -118,10 +146,132 @@ class LoginUser(graphene.Mutation):
         except Exception as e:
             print(f"Erro no login: {e}")
             return LoginUser(auth_payload=AuthPayload(message="Erro interno"))
+
+class ClassifyEmail(graphene.Mutation):
+    class Arguments:
+        sender = String(required=True)
+        subject = String(required=True)
+        body = String(required=True)
+    
+    email = Field(Email)
+    message = String()
+    
+    def mutate(self, info, sender, subject, body):
+        db = info.context.db
+        classifier = info.context.classifier
+        user_id = info.context.user_id
+        
+        if not user_id:
+            return ClassifyEmail(message="Usuário não autenticado")
+        
+        if not db or not classifier:
+            return ClassifyEmail(message="Sistema não inicializado")
+        
+        try:
+            # Classificar email
+            category_id, confidence = classifier.classify_email(subject, body)
+            
+            # Gerar resposta sugerida
+            suggested_response = classifier.generate_response(category_id, subject, body)
+            
+            # Salvar no banco
+            cursor = db.connection.cursor()
+            cursor.execute("""
+                INSERT INTO emails (sender, subject, body, category_id, confidence_score, 
+                                  suggested_response, user_id, is_processed)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """, (sender, subject, body, category_id, confidence, suggested_response, user_id, True))
+            
+            email_id = cursor.lastrowid
+            db.connection.commit()
+            
+            # Buscar nome da categoria
+            cursor.execute("SELECT name FROM categories WHERE id = %s", (category_id,))
+            category_result = cursor.fetchone()
+            category_name = category_result[0] if category_result else "Desconhecida"
+            
+            email = Email(
+                id=email_id,
+                sender=sender,
+                subject=subject,
+                body=body,
+                category_id=category_id,
+                category_name=category_name,
+                confidence_score=confidence,
+                suggested_response=suggested_response,
+                user_id=user_id,
+                is_processed=True
+            )
+            
+            return ClassifyEmail(email=email, message="Email classificado com sucesso")
+            
+        except Exception as e:
+            print(f"Erro na classificação: {e}")
+            return ClassifyEmail(message="Erro ao classificar email")
+
+class AddFeedback(graphene.Mutation):
+    class Arguments:
+        email_id = Int(required=True)
+        corrected_category_id = Int(required=True)
+        feedback_text = String()
+    
+    feedback = Field(Feedback)
+    message = String()
+    
+    def mutate(self, info, email_id, corrected_category_id, feedback_text=""):
+        db = info.context.db
+        user_id = info.context.user_id
+        
+        if not user_id:
+            return AddFeedback(message="Usuário não autenticado")
+        
+        if not db:
+            return AddFeedback(message="Sistema não inicializado")
+        
+        cursor = db.connection.cursor()
+        
+        try:
+            # Buscar email e categoria original
+            cursor.execute("SELECT category_id FROM emails WHERE id = %s", (email_id,))
+            email_data = cursor.fetchone()
+            
+            if not email_data:
+                return AddFeedback(message="Email não encontrado")
+            
+            original_category_id = email_data[0]
+            
+            # Inserir feedback
+            cursor.execute("""
+                INSERT INTO feedback (email_id, user_id, original_category_id, 
+                                    corrected_category_id, feedback_text)
+                VALUES (%s, %s, %s, %s, %s)
+            """, (email_id, user_id, original_category_id, corrected_category_id, feedback_text))
+            
+            feedback_id = cursor.lastrowid
+            db.connection.commit()
+            
+            feedback = Feedback(
+                id=feedback_id,
+                email_id=email_id,
+                user_id=user_id,
+                original_category_id=original_category_id,
+                corrected_category_id=corrected_category_id,
+                feedback_text=feedback_text
+            )
+            
+            return AddFeedback(feedback=feedback, message="Feedback adicionado com sucesso")
+            
+        except Exception as e:
+            print(f"Erro ao adicionar feedback: {e}")
+            db.connection.rollback()
+            return AddFeedback(message="Erro ao adicionar feedback")
+
 # Queries
 class Query(ObjectType):
     users = List(User)
-  
+    categories = List(Category)
+    emails = List(Email)
+    email = Field(Email, id=Int(required=True))
     
     def resolve_users(self, info):
         db = info.context.db
@@ -147,7 +297,84 @@ class Query(ObjectType):
             print(f"Erro ao buscar usuários: {e}")
             return []
     
-  
+    def resolve_categories(self, info):
+        db = info.context.db
+        
+        if not db:
+            return []
+        
+        try:
+            cursor = db.connection.cursor()
+            cursor.execute("SELECT id, name, description, color, created_at FROM categories")
+            categories_data = cursor.fetchall()
+            
+            return [Category(
+                id=cat[0],
+                name=cat[1],
+                description=cat[2],
+                color=cat[3],
+                created_at=str(cat[4])
+            ) for cat in categories_data]
+        except Exception as e:
+            print(f"Erro ao buscar categorias: {e}")
+            return []
+    
+    def resolve_emails(self, info):
+        db = info.context.db
+        user_id = info.context.user_id
+        is_admin = info.context.is_admin
+        
+        if not user_id or not db:
+            return []
+        
+        try:
+            cursor = db.connection.cursor()
+            
+            if is_admin:
+                query = """
+                    SELECT e.id, e.sender, e.subject, e.body, e.category_id, c.name,
+                           e.confidence_score, e.suggested_response, e.user_id, 
+                           e.is_processed, e.created_at
+                    FROM emails e
+                    LEFT JOIN categories c ON e.category_id = c.id
+                    ORDER BY e.created_at DESC
+                    LIMIT 100
+                """
+                cursor.execute(query)
+            else:
+                query = """
+                    SELECT e.id, e.sender, e.subject, e.body, e.category_id, c.name,
+                           e.confidence_score, e.suggested_response, e.user_id, 
+                           e.is_processed, e.created_at
+                    FROM emails e
+                    LEFT JOIN categories c ON e.category_id = c.id
+                    WHERE e.user_id = %s
+                    ORDER BY e.created_at DESC
+                    LIMIT 100
+                """
+                cursor.execute(query, (user_id,))
+            
+            emails_data = cursor.fetchall()
+            
+            return [Email(
+                id=email[0],
+                sender=email[1],
+                subject=email[2],
+                body=email[3],
+                category_id=email[4],
+                category_name=email[5] or "Desconhecida",
+                confidence_score=email[6] or 0.0,
+                suggested_response=email[7],
+                user_id=email[8],
+                is_processed=email[9],
+                created_at=str(email[10])
+            ) for email in emails_data]
+            
+        except Exception as e:
+            print(f"Erro ao buscar emails: {e}")
+            return []
+    
+    def resolve_email(self, info, id):
         db = info.context.db
         user_id = info.context.user_id
         is_admin = info.context.is_admin
@@ -201,10 +428,11 @@ class Query(ObjectType):
         except Exception as e:
             print(f"Erro ao buscar email: {e}")
             return None
-        
+
 class Mutation(ObjectType):
     register_user = RegisterUser.Field()
     login_user = LoginUser.Field()
-   
+    classify_email = ClassifyEmail.Field()
+    add_feedback = AddFeedback.Field()
 
 schema = graphene.Schema(query=Query, mutation=Mutation)

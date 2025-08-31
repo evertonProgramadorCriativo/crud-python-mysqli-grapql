@@ -16,99 +16,350 @@
         <link rel="stylesheet" href="/static/style.css">
     </head>
     <body>
- <!-- Login Modal -->
-    
-   <!-- Notificação -->
-        <div id="notification" class="notification"></div>
+  <!-- Notifications -->
+    <div id="notification" class="notification"></div>
 
-        <!-- Informações do Usuário -->
-        <div id="userInfo" class="user-info">
-            <div class="flex items-center space-x-3">
-                <div id="userAvatar" class="user-avatar"></div>
-                <div>
-                    <div id="userName" class="font-semibold text-gray-800"></div>
-                    <div id="userEmail" class="text-sm text-gray-600"></div>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <div class="text-center mb-6">
+                <div class="gradient-bg text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-envelope-open-text text-2xl"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800">Classificador de Emails</h2>
+                <p class="text-gray-600">Sistema inteligente de classificação</p>
+            </div>
+            
+            <div class="mb-4">
+                <div class="flex border-b">
+                    <button id="loginTab" class="flex-1 py-2 px-4 text-center font-medium tab-active">Login</button>
+                    <button id="registerTab" class="flex-1 py-2 px-4 text-center font-medium text-gray-600">Registrar</button>
                 </div>
             </div>
-            <button id="logoutBtn" class="mt-3 w-full bg-red-500 hover:bg-red-600 text-white text-sm py-2 px-4 rounded-lg transition duration-200">
-                <i class="fas fa-sign-out-alt mr-2"></i>Sair
-            </button>
-        </div>
 
-        <!-- Conteúdo Principal -->
-        <div id="mainContent" class="main-content">
-            <div class="welcome-card">
-                <div class="gradient-bg text-white w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                    <i class="fas fa-envelope-open-text text-3xl"></i>
-                </div>
-                <h1 class="text-3xl font-bold text-gray-800 mb-4">Bem-vindo ao Classificador de Emails!</h1>
-                <p class="text-gray-600 mb-6">Sistema inteligente de classificação de emails está pronto para uso.</p>
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                    <p class="text-blue-800 font-medium">Usuário logado com sucesso!</p>
-                    <p class="text-blue-600 text-sm mt-1">Aproveite todas as funcionalidades do sistema.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Login Modal -->
-        <div id="loginModal" class="modal show">
-            <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
-                <div class="text-center mb-6">
-                    <div class="gradient-bg text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                        <i class="fas fa-envelope-open-text text-2xl"></i>
-                    </div>
-                    <h2 class="text-2xl font-bold text-gray-800">Classificador de Emails</h2>
-                    <p class="text-gray-600">Sistema inteligente de classificação</p>
-                </div>
-                
+            <form id="loginForm">
                 <div class="mb-4">
-                    <div class="flex border-b">
-                        <button id="loginTab" class="flex-1 py-2 px-4 text-center font-medium tab-active">Login</button>
-                        <button id="registerTab" class="flex-1 py-2 px-4 text-center font-medium text-gray-600">Registrar</button>
-                    </div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                    <input type="text" id="loginUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
                 </div>
-
-                <!-- Formulário de Login -->
-                <form id="loginForm">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
-                        <input type="text" id="loginUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
-                        <input type="password" id="loginPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                    </div>
-                    <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
-                        <span id="loginBtnText">Entrar</span>
-                        <span id="loginLoader" class="loading hidden"></span>
-                    </button>
-                </form>
-
-                <!-- Formulário de Registro -->
-                <form id="registerForm" class="hidden">
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
-                        <input type="text" id="registerUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
-                        <input type="email" id="registerEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                    </div>
-                    <div class="mb-6">
-                        <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
-                        <input type="password" id="registerPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
-                    </div>
-                    <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
-                        <span id="registerBtnText">Registrar</span>
-                        <span id="registerLoader" class="loading hidden"></span>
-                    </button>
-                </form>
-
-                <div class="mt-4 text-center text-sm text-gray-600">
-                    <p>Login padrão: admin / admin123</p>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+                    <input type="password" id="loginPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
                 </div>
+                <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                    <span id="loginBtnText">Entrar</span>
+                    <span id="loginLoader" class="loading hidden"></span>
+                </button>
+            </form>
+
+            <form id="registerForm" class="hidden">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                    <input type="text" id="registerUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+                    <input type="password" id="registerPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+                </div>
+                <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                    <span id="registerBtnText">Registrar</span>
+                    <span id="registerLoader" class="loading hidden"></span>
+                </button>
+            </form>
+
+            <div class="mt-4 text-center text-sm text-gray-600">
+                <p>Demo: admin / admin123</p>
             </div>
         </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="hidden">
+        <!-- Header -->
+        <header class="gradient-bg text-white shadow-lg">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <div class="bg-white bg-opacity-20 w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                            <i class="fas fa-envelope-open-text text-xl"></i>
+                        </div>
+                        <h1 class="text-xl font-bold">Classificador de Emails IA</h1>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <span id="userInfo" class="text-sm"></span>
+                        <button id="logoutBtn" class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition duration-200">
+                            <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Navigation Tabs -->
+        <div class="bg-white shadow-sm border-b">
+            <div class="container mx-auto px-4">
+                <nav class="flex space-x-8">
+                    <button id="dashboardTab" class="py-4 px-2 border-b-2 border-blue-500 text-blue-600 font-medium">
+                        <i class="fas fa-chart-pie mr-2"></i>Dashboard
+                    </button>
+                    <button id="classifyTab" class="py-4 px-2 text-gray-600 hover:text-blue-600 font-medium">
+                        <i class="fas fa-plus-circle mr-2"></i>Classificar Email
+                    </button>
+                    <button id="emailsTab" class="py-4 px-2 text-gray-600 hover:text-blue-600 font-medium">
+                        <i class="fas fa-list mr-2"></i>Emails
+                    </button>
+                    <button id="uploadTab" class="py-4 px-2 text-gray-600 hover:text-blue-600 font-medium">
+                        <i class="fas fa-upload mr-2"></i>Upload Lote
+                    </button>
+                    <button id="adminTab" class="py-4 px-2 text-gray-600 hover:text-blue-600 font-medium hidden">
+                        <i class="fas fa-cog mr-2"></i>Admin
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="container mx-auto px-4 py-8">
+            <!-- Dashboard -->
+            <div id="dashboardContent">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white rounded-lg shadow-sm p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Total de Emails</p>
+                                <p id="totalEmails" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                            <div class="bg-blue-100 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Confiança Média</p>
+                                <p id="avgConfidence" class="text-3xl font-bold text-gray-900">0%</p>
+                            </div>
+                            <div class="bg-green-100 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-chart-line text-green-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Feedback Dados</p>
+                                <p id="totalFeedback" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                            <div class="bg-yellow-100 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-comments text-yellow-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-sm font-medium text-gray-600">Usuários</p>
+                                <p id="totalUsers" class="text-3xl font-bold text-gray-900">0</p>
+                            </div>
+                            <div class="bg-purple-100 w-12 h-12 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-users text-purple-600"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de Categorias -->
+                <div class="bg-white rounded-lg shadow-sm p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Distribuição por Categoria</h3>
+                    <div id="categoryChart" class="space-y-4"></div>
+                </div>
+            </div>
+
+            <!-- Classificar Email -->
+            <div id="classifyContent" class="hidden">
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-sm p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Classificar Novo Email</h2>
+                        <form id="classifyForm">
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Remetente</label>
+                                <input type="email" id="emailSender" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="exemplo@email.com">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Assunto</label>
+                                <input type="text" id="emailSubject" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Assunto do email">
+                            </div>
+                            <div class="mb-6">
+                                <label class="block text-gray-700 text-sm font-bold mb-2">Corpo do Email</label>
+                                <textarea id="emailBody" required rows="6" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder="Digite o conteúdo do email aqui..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full gradient-bg text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                                <span id="classifyBtnText">
+                                    <i class="fas fa-magic mr-2"></i>Classificar com IA
+                                </span>
+                                <span id="classifyLoader" class="loading hidden"></span>
+                            </button>
+                        </form>
+
+                        <!-- Resultado da Classificação -->
+                        <div id="classificationResult" class="hidden mt-8 p-6 bg-gray-50 rounded-lg">
+                            <h3 class="text-lg font-semibold text-gray-900 mb-4">Resultado da Classificação</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Categoria</p>
+                                    <span id="resultCategory" class="category-badge">Desconhecida</span>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-600">Confiança</p>
+                                    <div class="mt-1">
+                                        <div class="confidence-bar">
+                                            <div id="resultConfidenceBar" class="confidence-fill bg-blue-500"></div>
+                                        </div>
+                                        <span id="resultConfidence" class="text-sm text-gray-600 mt-1 block">0%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-600 mb-2">Resposta Sugerida</p>
+                                <div class="bg-white p-4 rounded border">
+                                    <p id="suggestedResponse" class="text-gray-800"></p>
+                                </div>
+                            </div>
+
+                            <!-- Feedback -->
+                            <div class="mt-6 border-t pt-4">
+                                <h4 class="text-md font-semibold text-gray-900 mb-3">Feedback da Classificação</h4>
+                                <div class="flex items-center space-x-4 mb-3">
+                                    <label class="text-sm font-medium text-gray-600">Categoria Correta:</label>
+                                    <select id="feedbackCategory" class="px-3 py-1 border border-gray-300 rounded text-sm">
+                                        <option value="">Selecione...</option>
+                                    </select>
+                                </div>
+                                <textarea id="feedbackText" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm" placeholder="Comentários adicionais (opcional)..."></textarea>
+                                <button id="submitFeedback" class="mt-2 bg-blue-600 text-white px-4 py-2 rounded text-sm hover:bg-blue-700 transition duration-200">
+                                    Enviar Feedback
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Emails -->
+            <div id="emailsContent" class="hidden">
+                <div class="bg-white rounded-lg shadow-sm">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex justify-between items-center">
+                            <h2 class="text-xl font-semibold text-gray-900">Emails Classificados</h2>
+                            <button id="refreshEmails" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                <i class="fas fa-sync-alt mr-2"></i>Atualizar
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Remetente</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Assunto</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Categoria</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Confiança</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data</th>
+                                </tr>
+                            </thead>
+                            <tbody id="emailsTableBody" class="bg-white divide-y divide-gray-200">
+                                <!-- Emails serão inseridos aqui -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload em Lote -->
+            <div id="uploadContent" class="hidden">
+                <div class="max-w-2xl mx-auto">
+                    <div class="bg-white rounded-lg shadow-sm p-8">
+                        <h2 class="text-2xl font-bold text-gray-900 mb-6">Upload de Emails em Lote</h2>
+                        
+                        <div class="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                            <h3 class="text-sm font-semibold text-blue-900 mb-2">Formato JSON Esperado:</h3>
+                            <pre class="text-xs text-blue-800 overflow-x-auto"><code>{
+  "emails": [
+    {
+      "sender": "cliente@exemplo.com",
+      "subject": "Problema no sistema",
+      "body": "Estou enfrentando dificuldades..."
+    }
+  ]
+}</code></pre>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Upload de Arquivo JSON</label>
+                            <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
+                                <input type="file" id="fileUpload" accept=".json" class="hidden">
+                                <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                                <p class="text-gray-600 mb-2">Arraste um arquivo JSON aqui ou clique para selecionar</p>
+                                <button id="selectFileBtn" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                                    Selecionar Arquivo
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2">Ou Cole o JSON Diretamente</label>
+                            <textarea id="jsonInput" rows="8" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500" placeholder='{"emails": [{"sender": "...", "subject": "...", "body": "..."}]}'></textarea>
+                        </div>
+
+                        <button id="uploadBtn" class="w-full gradient-bg text-white font-bold py-3 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                            <span id="uploadBtnText">
+                                <i class="fas fa-upload mr-2"></i>Processar Emails
+                            </span>
+                            <span id="uploadLoader" class="loading hidden"></span>
+                        </button>
+
+                        <!-- Resultado do Upload -->
+                        <div id="uploadResult" class="hidden mt-6 p-4 rounded-lg">
+                            <h3 class="text-lg font-semibold mb-2">Resultado do Processamento</h3>
+                            <div id="uploadResultContent"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Painel Admin -->
+            <div id="adminContent" class="hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <!-- Retreinar Modelo -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Retreinar Modelo IA</h3>
+                        <p class="text-gray-600 mb-4">Use os dados de feedback coletados para melhorar a precisão do modelo.</p>
+                        <button id="retrainBtn" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition duration-200">
+                            <span id="retrainBtnText">
+                                <i class="fas fa-brain mr-2"></i>Retreinar Modelo
+                            </span>
+                            <span id="retrainLoader" class="loading hidden"></span>
+                        </button>
+                        <div id="retrainResult" class="hidden mt-4 p-3 rounded"></div>
+                    </div>
+
+                    <!-- Categorias -->
+                    <div class="bg-white rounded-lg shadow-sm p-6">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Categorias Disponíveis</h3>
+                        <div id="categoriesList" class="space-y-2">
+                            <!-- Categorias serão carregadas aqui -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
     </body>
     <script src="/static/script.js"></script>
 </html>
