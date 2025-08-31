@@ -29,6 +29,44 @@ A plataforma combina **Machine Learning** com **GraphQL** para oferecer uma solu
    pip install -r requirements.txt # Instalação dos pacotes
    python app.py # Start o Projeto
 
+   ```
+  Rota: http://localhost:5000/graphql
+
+```bash
+# Mutation para login
+mutation {
+  loginUser(username: "admin", password: "admin123") {
+    authPayload {
+      token
+      user {
+        id
+        username
+        email
+        isAdmin
+      }
+      message
+    }
+  }
+}
+
+# Mutation para registro de novo usuário
+mutation {
+  registerUser(
+    username: "novousuario"
+    email: "novo@email.com" 
+    password: "senha123"
+  ) {
+    user {
+      id
+      username
+      email
+      isAdmin
+    }
+    message
+  }
+}
+
+```
 ##  O que o sistema faz
 -  **Classificação Automática:** Usa algoritmo **Naive Bayes** para categorizar emails em **6 categorias**
 -  **Dashboard Interativo:** Interface web com estatísticas e visualizações
