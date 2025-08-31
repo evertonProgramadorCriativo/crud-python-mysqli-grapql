@@ -1,0 +1,176 @@
+# .gitignore para projeto Email Classifier com Python/Flask
+
+#  Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+#  Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# 📊 Jupyter Notebook
+.ipynb_checkpoints
+
+#  IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+#  Database (não versionar bancos de dados)
+*.db
+*.sqlite
+*.sqlite3
+
+# 🤖 Modelos de IA/Machine Learning
+*.pkl
+*.pickle
+*.model
+*.h5
+*.hdf5
+*.joblib
+
+#  Logs
+*.log
+logs/
+
+#  Package manager specific
+pip-delete-this-directory.txt
+pip-log.txt
+
+#  Testing
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+#  OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+#  Deployment
+.dockerignore
+Dockerfile
+docker-compose.yml
+
+#  Metrics and analysis
+.profile
+.stats
+
+#  Configuration files (não versionar configurações sensíveis)
+config.ini
+config.local.ini
+settings.ini
+
+#  Temporary files
+temp/
+tmp/
+
+#  Frontend assets (se houver)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.webpack/
+
+# Data files grandes
+*.csv
+*.jsonl
+*.parquet
+
+#  Documentação
+_site/
+.sass-cache/
+.jekyll-cache/
+
+#  Arquivos compactados
+*.zip
+*.tar
+*.gz
+
+#  Imagens e arquivos binários
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tiff
+*.ico
+*.pdf
+
+#  Arquivos de mídia
+*.mp3
+*.wav
+*.ogg
+*.mp4
+*.avi
+*.mov
+
+#  Arquivos do Office
+*.doc
+*.docx
+*.xls
+*.xlsx
+*.ppt
+*.pptx
+
+#  Docker
+.docker/
+
+#  Cloud
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+#  Debug
+*.stackdump
+
+#  Clean
+*__pycache__*/
+
+#  Projeto específico - Modelos treinados
+email_classifier_model.pkl
+email_vectorizer.pkl
+
+#  Projeto específico - Uploads de usuários
+uploads/
+temp_uploads/
+
+#  Projeto específico - Cache
+.cache/
+.pytest_cache/
+.mypy_cache/
