@@ -1,25 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>estrutura inicial</title>
-     <!-- Importação do CSS -->
-  <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Testando estrutura do projeto</h1>
-        <button class="btn" id="helloBtn">Clique Aqui!</button>
-        <div class="counter">Total de mensagens: <span id="counter">0</span></div>
-        <div class="messages" id="messagesContainer">
-            <!-- As mensagens serão adicionadas aqui -->
-        </div>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>estrutura inicial</title>
+        <!-- Importação do Tailwind CSS -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+            rel="stylesheet">
+        <!-- Importação do font-awesome Icones -->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+            rel="stylesheet">
+        <!-- Importação do CSS -->
+        <link rel="stylesheet" href="/static/style.css">
+    </head>
+    <body>
+ <!-- Login Modal -->
     
-    <footer>
-        Clique no botão para adicionar uma mensagem "Olá Mundo"
-    </footer>
-</body>
-<script src="/static/script.js"></script>
+  <div id="loginModal" class="modal show">
+    <!-- Lembra de remove a class show -->
+      <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+        
+          <div class="text-center mb-6">
+              <div class="gradient-bg text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-envelope-open-text text-2xl"></i>
+              </div>
+              <h2 class="text-2xl font-bold text-gray-800">Classificador de Emails</h2>
+              <p class="text-gray-600">Sistema inteligente de classificação</p>
+          </div>
+          
+          <div class="mb-4">
+              <div class="flex border-b">
+                  <button id="loginTab" class="flex-1 py-2 px-4 text-center font-medium tab-active">Login</button>
+                  <button id="registerTab" class="flex-1 py-2 px-4 text-center font-medium text-gray-600">Registrar</button>
+              </div>
+          </div>
+
+          <form id="loginForm">
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                  <input type="text" id="loginUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              </div>
+              <div class="mb-6">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+                  <input type="password" id="loginPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              </div>
+              <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                  <span id="loginBtnText">Entrar</span>
+                  <span id="loginLoader" class="loading hidden"></span>
+              </button>
+          </form>
+
+          <form id="registerForm" class="hidden">
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Usuário</label>
+                  <input type="text" id="registerUsername" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              </div>
+              <div class="mb-4">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Email</label>
+                  <input type="email" id="registerEmail" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              </div>
+              <div class="mb-6">
+                  <label class="block text-gray-700 text-sm font-bold mb-2">Senha</label>
+                  <input type="password" id="registerPassword" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500">
+              </div>
+              <button type="submit" class="w-full gradient-bg text-white font-bold py-2 px-4 rounded-lg hover:opacity-90 transition duration-200">
+                  <span id="registerBtnText">Registrar</span>
+                  <span id="registerLoader" class="loading hidden"></span>
+              </button>
+          </form>
+
+          <div class="mt-4 text-center text-sm text-gray-600">
+              <p>Loginho: admin / admin123</p>
+          </div>
+      </div>
+  </div>
+    </body>
+    <script src="/static/script.js"></script>
 </html>

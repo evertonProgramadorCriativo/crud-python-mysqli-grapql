@@ -1,11 +1,33 @@
-#  Email Classifier  - Sistema Inteligente de Classificação de Emails
+#  Sistema Inteligente de Classificação de Emails
 
 ##  Resumo do Projeto
 
-**Email Classifier ** é um sistema completo de classificação automática de emails utilizando **Inteligência Artificial**.  
+Um sistema completo com  a Tecnologia **Python** , **MySQL Connector Python** e **GraphQL**  de classificação **automática** de emails.
+
 A plataforma combina **Machine Learning** com **GraphQL** para oferecer uma solução robusta de organização e resposta automática de emails corporativos.
 
+
+[![MySQL Connector Python](https://img.shields.io/badge/MySQL_Connector_Python-8.1.0-4479A1)](https://dev.mysql.com/doc/connector-python/en/)
+[![Graphene](https://img.shields.io/badge/Graphene-2.1.9-E10098)](https://graphene-python.org/)
+[![GraphQL Core](https://img.shields.io/badge/GraphQL_Core-2.3.2-E535AB)](https://graphql-core.readthedocs.io/)
+[![Flask](https://img.shields.io/badge/Flask-2.3.3-000000)](https://flask.palletsprojects.com/)
+[![Flask GraphQL](https://img.shields.io/badge/Flask_GraphQL-2.0.1-0080FF)](https://github.com/graphql-python/flask-graphql)
+[![Flask CORS](https://img.shields.io/badge/Flask_CORS-4.0.0-FF7F50)](https://flask-cors.readthedocs.io/)
+[![PyJWT](https://img.shields.io/badge/PyJWT-2.8.0-000000)](https://pyjwt.readthedocs.io/)
+[![Bcrypt](https://img.shields.io/badge/Bcrypt-4.2.0-FF6B6B)](https://github.com/pyca/bcrypt/)
+[![Scikit Learn](https://img.shields.io/badge/Scikit_Learn-1.7.1-F7931E)](https://scikit-learn.org/)
+[![Pandas](https://img.shields.io/badge/Pandas-2.2.2-150458)](https://pandas.pydata.org/)
+[![NumPy](https://img.shields.io/badge/NumPy-2.1.1-013243)](https://numpy.org/)
+[![NLTK](https://img.shields.io/badge/NLTK-3.9-4B8BBE)](https://www.nltk.org/)
+
+
 ---
+1. **Rodando o Projeto**  
+   ```bash
+   projeto/ 
+
+   pip install -r requirements.txt # Instalação dos pacotes
+   python app.py # Start o Projeto
 
 ##  O que o sistema faz
 -  **Classificação Automática:** Usa algoritmo **Naive Bayes** para categorizar emails em **6 categorias**
@@ -35,3 +57,6 @@ A plataforma combina **Machine Learning** com **GraphQL** para oferecer uma solu
 - pip (gerenciador de pacotes Python)
 
 ---
+
+![Formulario](https://i.ibb.co/NghgZqWH/Screenshot-16.png) 
+![Estrutura do Projeto](https://i.ibb.co/rRvQG62d/Screenshot-17.png) 

@@ -1,4 +1,4 @@
-mysql-connector-python==8.1.0
+arquivo requirements.txt tecnologias pacotes mysql-connector-python==8.1.0
 graphene==2.1.9
 graphql-core==2.3.2
 flask==2.3.3
