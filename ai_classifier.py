@@ -6,7 +6,6 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, accuracy_score
-import nltk
 import re
 import pickle
 import os
